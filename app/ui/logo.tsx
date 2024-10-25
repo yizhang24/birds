@@ -3,5 +3,5 @@ export default function Logo() {
         <div className="">
             Birds
         </div>
-    )
+    );
 }

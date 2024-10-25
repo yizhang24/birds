@@ -5,7 +5,7 @@ const limitParams = {
     windowStart: Date.now(),
     windowSize: 5000, // Five second
     maxRequests: 10 // Ten requests per five seconds
-}
+};
 
 const limit = (ip: string) => {
     const now = Date.now();
@@ -18,7 +18,7 @@ const limit = (ip: string) => {
     if (tally >= limitParams.maxRequests) return true;
     idToRequests.set(ip, tally + 1);
     return false;
-}
+};
 
 export async function GET(req: NextRequest) {
     const ip = req.ip ?? req.headers.get('X-Forwarded-For') ?? "";
@@ -27,22 +27,22 @@ export async function GET(req: NextRequest) {
             status: 429
         });
     }
-    const searchParams = req.nextUrl.searchParams
-    const query = searchParams.get('query')
+    const searchParams = req.nextUrl.searchParams;
+    const query = searchParams.get('query');
     const url = `https://maps.googleapis.com/maps/api/place/autocomplete/` +
         `json?input=${encodeURIComponent(query ? query : "")}` +
         `&language=en` +
         `&type=%28cities%29` +
-        `&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`
+        `&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
     try {
-        const response = await fetch(url)
-        const data = await response.json()
+        const response = await fetch(url);
+        const data = await response.json();
         return new Response(JSON.stringify(data), {
             status: 200
-        })
-    } catch (err) {
+        });
+    } catch {
         return new Response(JSON.stringify({ "message": "Failed to fetch data" }), {
             status: 500
-        })
+        });
     }
 }

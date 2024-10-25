@@ -4,5 +4,5 @@ export default function Links() {
             <a>Home</a>
             <a>About</a>
         </div>
-    )
+    );
 }
