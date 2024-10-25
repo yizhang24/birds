@@ -14,6 +14,10 @@ const config: Config = {
       colors: {
         background: "var(--background)",
         foreground: "var(--foreground)",
+        pink: "#F7D3D3",
+        green: "#E4F0E6",
+        purple: "#E2D8FA",
+        yellow: "#FCE6A9",
       }
     },
   },

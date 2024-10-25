@@ -20,7 +20,6 @@ const limit = (ip: string) => {
     return false;
 }
 
-
 export async function GET(req: NextRequest) {
     const ip = req.ip ?? req.headers.get('X-Forwarded-For') ?? "";
     if(limit(ip)) {
