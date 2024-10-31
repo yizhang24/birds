@@ -72,15 +72,13 @@ export default function GeoSearch() {
         } catch (err) {
             console.log(err);
         }
-        for (let index = 0; index < predictions.length; index++) {
-            console.log(predictions[index].description);
-        }
     };
 
     const selectItem = async (locationId: string) => {
         const url = `/api/regions?query=${encodeURIComponent(locationId)}&sessionId=${uuid}`;
         const response = await fetch(url);
         const data = await response.json();
+        setUuid('');
         console.log(data.result.address_components[1].long_name);
         console.log(lookup(data.result.address_components[2].short_name, data.result.address_components[1].long_name));
     };
