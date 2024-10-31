@@ -20,7 +20,7 @@ const limit = (ip: string) => {
     return false;
 };
 
-const testData = JSON.parse('{"html_attributions": [],"result": {"address_components": [{"long_name": "Davis","short_name": "Davis","types": ["locality","political"]},{"long_name": "Yolo County","short_name": "Yolo County","types": ["administrative_area_level_2","political"]},{"long_name": "California","short_name": "CA","types": ["administrative_area_level_1","political"]},{"long_name": "United States","short_name": "US","types": ["country","political"]}]},"status": "OK"}');
+const data = JSON.parse('{"html_attributions": [],"result": {"address_components": [{"long_name": "Davis","short_name": "Davis","types": ["locality","political"]},{"long_name": "Yolo County","short_name": "Yolo County","types": ["administrative_area_level_2","political"]},{"long_name": "California","short_name": "CA","types": ["administrative_area_level_1","political"]},{"long_name": "United States","short_name": "US","types": ["country","political"]}]},"status": "OK"}');
 
 export async function GET(req: NextRequest) {
     const ip = req.ip ?? req.headers.get('X-Forwarded-For') ?? "";
@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
     try {
         // const response = await fetch(url);
         // const data = await response.json();
-        return new Response(JSON.stringify(testData), {
+        return new Response(JSON.stringify(data), {
             status: 200
         });
     } catch {
