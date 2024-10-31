@@ -1,6 +1,6 @@
-import "@/app/ui/globals.css";
+import "@/styles/globals.css";
 import { plex_mono } from "@/styles/fonts";
-import TopNav from "@/components/topnav";
+import TopNav from "@/components/topNav";
 
 export default function Layout({ children, }: Readonly<{ children: React.ReactNode }>) {
   return (
