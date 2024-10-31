@@ -1,5 +1,7 @@
 'use client';
 import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { v4 } from "uuid";
+
 interface Prediction {
     description: string,
     place_id: string
@@ -19,13 +21,29 @@ export default function GeoSearch() {
         };
     };
 
+    const [uuid, setUuid] = useState('');
+
+    const generateUuid = () => {
+        const storedUuid = sessionStorage.getItem('sessionId');
+        if (storedUuid) {
+            setUuid(storedUuid);
+        } else {
+            const newId = v4();
+            setUuid(newId);
+            sessionStorage.setItem('sessionId', newId);
+        }
+    };
+
     useEffect(() => {
         return () => {
+            sessionStorage.clear();
+            setUuid('');
             if (timer.current) {
                 clearTimeout(timer.current);
             }
         };
-    });
+    }, []);
+
 
     const [predictions, setPredictions] = useState<Prediction[]>([]);
 
@@ -42,7 +60,10 @@ export default function GeoSearch() {
             setPredictions([]);
             return;
         }
-        // const url = `/api/places?query=${encodeURIComponent(input)}`;
+        if (uuid == '') {
+            generateUuid();
+        }
+        // const url = `/api/places?query=${encodeURIComponent(input)}&sessionId=${uuid}`;
         try {
             // const response = await fetch(url);
             // const data = await response.json();
@@ -56,6 +77,14 @@ export default function GeoSearch() {
         for (let index = 0; index < predictions.length; index++) {
             console.log(predictions[index].description);
         }
+    };
+
+    const selectItem = async (locationId: string) => {
+        const url = `/api/regions?query=${encodeURIComponent(locationId)}&sessionId=${uuid}`;
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data.result.address_components[1].long_name);
+
     };
 
     const colors = ["yellow", "green", "purple", "pink"];
@@ -72,7 +101,7 @@ export default function GeoSearch() {
                     <ul className="border-2 px-2 border-black bg-background">
                         {predictions.map((prediction: Prediction) => (
                             <li className="my-2 hover:underline group" key={prediction.place_id}>
-                                <a className={`group-hover:bg-${getBackgroundColor()}`}>{prediction.description}</a>
+                                <div className={`group-hover:bg-${getBackgroundColor()}`} onClick={() => selectItem(prediction.place_id)}>{prediction.description}</div>
                             </li>
                         ))}
                     </ul>
