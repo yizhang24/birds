@@ -90,7 +90,7 @@ export default function GeoSearch() {
     const colors = ["yellow", "green", "purple", "pink"];
     const getBackgroundColor = () => {
         const val = Math.random() * 4;
-        return colors[Math.floor(val)];
+        return "var(--" + colors[Math.floor(val)] + ")";
     };
 
     return (
@@ -99,9 +99,10 @@ export default function GeoSearch() {
             <div className="absolute mt-[1.75/2rem] pt-12 w-full z-0">
                 {predictions.length > 0 && (
                     <ul className="border-2 px-2 border-black bg-background">
-                        {predictions.map((prediction: Prediction) => (
+                        {predictions.map((prediction: Prediction, index: number) => (
                             <li className="my-2 hover:underline group" key={prediction.place_id}>
-                                <div className={`group-hover:bg-${getBackgroundColor()}`} onClick={() => selectItem(prediction.place_id)}>{prediction.description}</div>
+                                <style>{`.list-item-${index}:hover{background-color: ${getBackgroundColor()};}`}</style>
+                                <div className={`list-item-${index}`} onClick={() => selectItem(prediction.place_id)}>{prediction.description}</div>
                             </li>
                         ))}
                     </ul>
