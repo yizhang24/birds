@@ -5,6 +5,10 @@
 :root {
   --background: #ECE9E2;
   --foreground: #333;
+  --pink: #F7D3D3;
+  --green: #E4F0E6;
+  --purple: #E2D8FA;
+  --yellow: #FCE6A9;
   font-family: var(--font-plex-mono);
 }
 
