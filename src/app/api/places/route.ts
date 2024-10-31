@@ -36,6 +36,7 @@ export async function GET(req: NextRequest) {
         `json?input=${encodeURIComponent(query ? query : "")}` +
         `&language=en` +
         `&type=%28cities%29` +
+        `&components=country:us` +
         `&sessiontoken=${uuid}` +
         `&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
     console.log(url);
