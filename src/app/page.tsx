@@ -1,5 +1,5 @@
 "use client";
-import GeoSearch from "@/app/ui/geosearch";
+import GeoSearch from "@/components/geosearch";
 
 export default function Page() {
   return (
